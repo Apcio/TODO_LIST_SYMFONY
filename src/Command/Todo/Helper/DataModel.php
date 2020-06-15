@@ -56,11 +56,11 @@ class DataModel {
         }
 
         if(array_key_exists("nr", $a)) {
-            $nrA = $a["nr"]; 
+            $nrA = intval($a["nr"]); 
         }
 
         if(array_key_exists("nr", $b)) {
-            $nrB = $b["nr"]; 
+            $nrB = intval($b["nr"]); 
         }
 
         if($dateA === $dateB) {
@@ -82,7 +82,7 @@ class DataModel {
         $nameB = null;
         $nrA = 0;
         $nrB = 0;
-
+        
         if(array_key_exists("nazwa", $a)) {
             $nameA = $a["nazwa"]; 
         }
@@ -92,14 +92,14 @@ class DataModel {
         }
 
         if(array_key_exists("nr", $a)) {
-            $nrA = $a["nr"]; 
+            $nrA = intval($a["nr"]); 
         }
 
         if(array_key_exists("nr", $b)) {
-            $nrB = $b["nr"]; 
+            $nrB = intval($b["nr"]); 
         }
 
-        if(($nameA === $nameB) || (strnatcmp($nameA, $nameB) === 0)) {
+        if((!isset($nameA) && !isset($nameB)) || (strnatcmp($nameA, $nameB) === 0)) {
             if($nrA === $nrB) {
                 return 0;
             } else {
@@ -171,15 +171,13 @@ class DataModel {
             $column = "nazwa";
         }
 
-       // $oldLocale = setLocale(LC_ALL, "0");
-     //   setlocale(LC_ALL, "pl_PL.utf8");
-
         switch($column) {
             case "nazwa" : usort($list, array($this, "uSortByNameCallback"));
+                break;
             default: usort($list, array($this, "uSortByDateCallback"));
+                break;
         }
 
-     //   setlocale(LC_ALL, $oldLocale);
         return $list;
     }
 
